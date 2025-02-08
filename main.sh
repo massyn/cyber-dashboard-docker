@@ -21,7 +21,8 @@ cp amazon_linux/nginx.conf /etc/nginx/sites-available/default
 service nginx start
 
 cd server
-gunicorn -w 4 -b 0.0.0.0:8000 app:server &
+#gunicorn -w 4 -b 0.0.0.0:8000 app:server &
+python app.py &
 cd ../..
 
 # == start the data collection
