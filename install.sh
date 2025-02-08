@@ -33,19 +33,21 @@ install_package() {
 install_package "git"
 install_package "nginx"
 
-if ! command_exists "aws"; then
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" -o "awscliv2.zip" \
-        && unzip awscliv2.zip \
-        && ./aws/install \
-        && rm awscliv2.zip
+curl "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install \
+    && rm awscliv2.zip
+
+if command_exists yum; then
+    yum remove python3-requests -y
 fi
 
 git clone https://github.com/massyn/cyber-dashboard-flask
 git clone https://github.com/massyn/cyber-metrics
 
 # == install the main app
-pip3 install --no-cache-dir -r cyber-dashboard-flask/requirements.txt
-pip3 install --no-cache-dir -r cyber-metrics/requirements.txt
+pip install --no-cache-dir -r cyber-dashboard-flask/requirements.txt
+pip install --no-cache-dir -r cyber-metrics/requirements.txt
 
 #chown ec2-user /cyber-dashboard-flask -R
 #cp flaskapp.service /etc/systemd/system/flaskapp.service
