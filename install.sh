@@ -43,7 +43,7 @@ fi
 install_package "git"
 install_package "nginx"
 install_package "unzip"
-install package "python3-pip"
+install_package "python3-pip"
 
 curl "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" -o "awscliv2.zip" \
     && unzip awscliv2.zip \
