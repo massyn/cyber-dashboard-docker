@@ -8,24 +8,7 @@ wait_until_time() {
     done
 }
 
-# Check for python3
-if command -v python3 >/dev/null 2>&1; then
-    PYTHON=$(command -v python3)
-elif command -v python >/dev/null 2>&1; then
-    PYTHON=$(command -v python)
-else
-    echo "Error: Neither python3 nor python found on the system."
-    exit 1
-fi
-
 cd cyber-dashboard-flask
-
-if [ ! -z "$AWS_S3_BUCKET" ]; then
-    aws s3 cp $AWS_S3_BUCKET/summary.parquet data/summary.parquet 
-    aws s3 cp $AWS_S3_BUCKET/detail.parquet data/detail.parquet 
-    aws s3 cp $AWS_S3_BUCKET/config.yml server/config.yml
-fi
-
 
 service nginx start
 
@@ -37,22 +20,15 @@ cd ../..
 cd cyber-metrics
 while true; do
     cd 01-collectors
-    $PYTHON wrapper.py
+    python wrapper.py
     cd ..
 
     cd 02-metrics
-    $PYTHON metrics.py
+    python metrics.py
     cd ..
 
     cd ../cyber-dashboard-flask/server
-    $PYTHON api.py -load ../../cyber-metrics/data/detail.parquet
-
-    # once the API has been uploaded, store the data files for later use
-    if [ ! -z "$AWS_S3_BUCKET" ]; then
-        aws s3 cp ../data/summary.parquet $AWS_S3_BUCKET/summary.parquet
-        aws s3 cp ../data/detail.parquet $AWS_S3_BUCKET/detail.parquet
-        aws s3 cp ../server/config.yml $AWS_S3_BUCKET/config.yml
-    fi
+    python api.py -load ../../cyber-metrics/data/detail.parquet
 
     cd ../../cyber-metrics
 
