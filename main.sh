@@ -8,6 +8,16 @@ wait_until_time() {
     done
 }
 
+# Check for python3
+if command -v python3 >/dev/null 2>&1; then
+    PYTHON=$(command -v python3)
+elif command -v python >/dev/null 2>&1; then
+    PYTHON=$(command -v python)
+else
+    echo "Error: Neither python3 nor python found on the system."
+    exit 1
+fi
+
 cd cyber-dashboard-flask
 
 if [ ! -z "$AWS_S3_BUCKET" ]; then
@@ -16,28 +26,26 @@ if [ ! -z "$AWS_S3_BUCKET" ]; then
     aws s3 cp $AWS_S3_BUCKET/config.yml server/config.yml
 fi
 
-# service nginx stop
-# cp amazon_linux/nginx.conf /etc/nginx/sites-available/default
-# service nginx start
+
+service nginx start
 
 cd server
 gunicorn -w 4 -b 0.0.0.0:8080 app:server &
-#python app.py &
 cd ../..
 
 # == start the data collection
 cd cyber-metrics
 while true; do
     cd 01-collectors
-    python wrapper.py
+    $PYTHON wrapper.py
     cd ..
 
     cd 02-metrics
-    python metrics.py
+    $PYTHON metrics.py
     cd ..
 
     cd ../cyber-dashboard-flask/server
-    python api.py -load ../../cyber-metrics/data/detail.parquet
+    $PYTHON api.py -load ../../cyber-metrics/data/detail.parquet
 
     # once the API has been uploaded, store the data files for later use
     if [ ! -z "$AWS_S3_BUCKET" ]; then
