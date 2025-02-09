@@ -16,9 +16,9 @@ if [ ! -z "$AWS_S3_BUCKET" ]; then
     aws s3 cp $AWS_S3_BUCKET/config.yml server/config.yml
 fi
 
-service nginx stop
-cp amazon_linux/nginx.conf /etc/nginx/sites-available/default
-service nginx start
+# service nginx stop
+# cp amazon_linux/nginx.conf /etc/nginx/sites-available/default
+# service nginx start
 
 cd server
 gunicorn -w 4 -b 0.0.0.0:8000 app:server &
