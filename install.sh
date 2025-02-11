@@ -29,21 +29,10 @@ install_package() {
     echo "$PACKAGE installation complete."
 }
 
-# Check for python3
-if command -v python3 >/dev/null 2>&1; then
-    PYTHON=$(command -v python3)
-elif command -v python >/dev/null 2>&1; then
-    PYTHON=$(command -v python)
-else
-    echo "Error: Neither python3 nor python found on the system."
-    exit 1
-fi
-
 # Run the function with the provided argument
 install_package "git"
 install_package "nginx"
 install_package "unzip"
-install_package "python3-pip"
 
 curl "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" -o "awscliv2.zip" \
     && unzip awscliv2.zip \
@@ -58,8 +47,8 @@ git clone https://github.com/massyn/cyber-dashboard-flask
 git clone https://github.com/massyn/cyber-metrics
 
 # == install the main app
-$PYTHON -m pip install --no-cache-dir -r cyber-dashboard-flask/requirements.txt
-$PYTHON -m pip install --no-cache-dir -r cyber-metrics/requirements.txt
+python -m pip install --no-cache-dir -r cyber-dashboard-flask/requirements.txt
+python -m pip install --no-cache-dir -r cyber-metrics/requirements.txt
 
 if [ -f /etc/nginx/sites-enabled/default ]; then
     cp nginx.conf /etc/nginx/sites-enabled/default
