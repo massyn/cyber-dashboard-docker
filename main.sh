@@ -17,6 +17,8 @@ wait_until_time() {
     done
 }
 
+cd /usr/bin/dashboard
+
 . .venv/bin/activate
 
 cd cyber-dashboard-flask
