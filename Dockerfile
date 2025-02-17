@@ -9,6 +9,8 @@ COPY install.sh .
 COPY nginx.conf .
 RUN sh install.sh
 
+RUN echo "Updated on $(date)" >> cyber-dashboard-flask/server/about.md
+
 COPY main.sh .
 RUN chmod +x main.sh
 
