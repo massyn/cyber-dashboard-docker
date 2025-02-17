@@ -23,6 +23,10 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" -o "awscliv
     && ./aws/install \
     && rm awscliv2.zip
 
+# == we create a separate folder to keep all of it
+mkdir /usr/bin/dashboard
+cd /usr/bin/dashboard
+
 # == We create a new python virtual environment to keep things clean
 python -m venv .venv
 . .venv/bin/activate
