@@ -23,6 +23,10 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" -o "awscliv
     && ./aws/install \
     && rm awscliv2.zip
 
+# == We create a new python virtual environment to keep things clean
+python -m venv .venv
+. .venv/bin/activate
+
 # == let's go grab our main application
 git clone https://github.com/massyn/cyber-dashboard-flask
 git clone https://github.com/massyn/cyber-metrics

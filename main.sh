@@ -21,6 +21,8 @@ cd cyber-dashboard-flask
 
 service nginx start
 
+. .venv/bin/activate
+
 cd server
 if check_qemu; then
     python app.py &
