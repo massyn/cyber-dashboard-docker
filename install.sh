@@ -23,6 +23,13 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" -o "awscliv
     && ./aws/install \
     && rm awscliv2.zip
 
+# == configure nginx
+if [ -f /etc/nginx/sites-enabled/default ]; then
+    cp nginx.conf /etc/nginx/sites-enabled/default
+else
+    cp nginx.conf /etc/nginx/conf.d/app.conf
+fi
+
 # == we create a separate folder to keep all of it
 mkdir /usr/bin/dashboard
 cd /usr/bin/dashboard
@@ -39,12 +46,7 @@ python -m pip install --no-cache-dir -r cyber-metrics/requirements.txt
 
 # == TODO configure the flask app
 
-# == configure nginx
-if [ -f /etc/nginx/sites-enabled/default ]; then
-    cp nginx.conf /etc/nginx/sites-enabled/default
-else
-    cp nginx.conf /etc/nginx/conf.d/app.conf
-fi
+# Start nginx
 
 if command -v systemctl >/dev/null 2>&1; then
     echo "Using systemctl to manage nginx..."
