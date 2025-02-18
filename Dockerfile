@@ -7,6 +7,7 @@ RUN apt-get upgrade -y
 
 COPY install.sh .
 COPY nginx.conf .
+
 RUN sh install.sh
 
 RUN echo "Docker built on $(date)" >> /usr/bin/dashboard/cyber-dashboard-flask/server/about.md

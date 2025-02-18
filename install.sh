@@ -30,6 +30,12 @@ else
     cp nginx.conf /etc/nginx/conf.d/app.conf
 fi
 
+# == copy flask app
+#cp flaskapp.service /etc/systemd/system
+
+# == create the local user
+useradd -r -g 0 cyberdashboard
+
 # == we create a separate folder to keep all of it
 mkdir /usr/bin/dashboard
 cd /usr/bin/dashboard
@@ -44,7 +50,13 @@ git clone https://github.com/massyn/cyber-metrics
 python -m pip install --no-cache-dir -r cyber-dashboard-flask/requirements.txt
 python -m pip install --no-cache-dir -r cyber-metrics/requirements.txt
 
-# == TODO configure the flask app
+# # == TODO configure the flask app
+# if command -v systemctl >/dev/null 2>&1; then
+#     systemctl daemon-reload
+#     systemctl start flaskapp
+# else
+#     service flaskapp start
+# fi
 
 # Start nginx
 
