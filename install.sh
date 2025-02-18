@@ -2,7 +2,7 @@
 
 # Install all basic packages
 if command -v yum >/dev/null 2>&1; then
-    yum install -y
+    yum update -y
     yum install git -y
     yum install nginx -y
     yum install unzip -y
@@ -30,6 +30,12 @@ else
     cp nginx.conf /etc/nginx/conf.d/app.conf
 fi
 
+if command -v python3 >/dev/null 2>&1; then
+    export PYTHON=python3
+else
+    export PYTHON=python
+fi
+
 # == copy flask app
 #cp flaskapp.service /etc/systemd/system
 
@@ -41,14 +47,14 @@ mkdir /usr/bin/dashboard
 cd /usr/bin/dashboard
 
 # == We create a new python virtual environment to keep things clean
-python -m venv .venv
+$PYTHON -m venv .venv
 . .venv/bin/activate
 
 # == let's go grab our main application
 git clone https://github.com/massyn/cyber-dashboard-flask
 git clone https://github.com/massyn/cyber-metrics
-python -m pip install --no-cache-dir -r cyber-dashboard-flask/requirements.txt
-python -m pip install --no-cache-dir -r cyber-metrics/requirements.txt
+$PYTHON -m pip install --no-cache-dir -r cyber-dashboard-flask/requirements.txt
+$PYTHON -m pip install --no-cache-dir -r cyber-metrics/requirements.txt
 
 # # == TODO configure the flask app
 # if command -v systemctl >/dev/null 2>&1; then
