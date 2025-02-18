@@ -53,8 +53,8 @@ $PYTHON -m venv .venv
 # == let's go grab our main application
 git clone https://github.com/massyn/cyber-dashboard-flask
 git clone https://github.com/massyn/cyber-metrics
-$PYTHON -m pip install --no-cache-dir -r cyber-dashboard-flask/requirements.txt
-$PYTHON -m pip install --no-cache-dir -r cyber-metrics/requirements.txt
+pip install --no-cache-dir -r cyber-dashboard-flask/requirements.txt
+pip install --no-cache-dir -r cyber-metrics/requirements.txt
 
 # # == TODO configure the flask app
 # if command -v systemctl >/dev/null 2>&1; then
