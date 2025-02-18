@@ -10,14 +10,12 @@ wait_until_time() {
 
 service nginx start
 
-cd /usr/bin/dashboard
-. .venv/bin/activate
-
-cd /usr/bin/dashboard/cyber-dashboard-flask/server
+cd cyber-dashboard-flask/server
 gunicorn -w 4 -b 0.0.0.0:8080 app:server &
+#python app.py &
 
 # == start the data collection
-cd /usr/bin/dashboard/cyber-metrics
+cd ../../cyber-metrics
 while true; do
     cd 01-collectors
     python wrapper.py

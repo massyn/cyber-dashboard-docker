@@ -4,13 +4,16 @@ WORKDIR /python-docker
 
 RUN apt-get update
 RUN apt-get upgrade -y
+RUN apt-get install nginx -y
 
-COPY install.sh .
-COPY nginx.conf .
+RUN git clone https://github.com/massyn/cyber-dashboard-flask
+RUN git clone https://github.com/massyn/cyber-metrics
+RUN pip install --no-cache-dir -r cyber-dashboard-flask/requirements.txt
+RUN pip install --no-cache-dir -r cyber-metrics/requirements.txt
 
-RUN sh install.sh
+COPY nginx.conf /etc/nginx/sites-enabled/default
 
-RUN echo "Docker built on $(date)" >> /usr/bin/dashboard/cyber-dashboard-flask/server/about.md
+RUN echo "Docker built on $(date)" >> cyber-dashboard-flask/server/about.md
 
 COPY main.sh .
 RUN chmod +x main.sh
