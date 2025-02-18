@@ -61,12 +61,12 @@ git clone https://github.com/massyn/cyber-metrics
 
 # == We create a new python virtual environment to keep things clean
 if [ "$os_type" = "amzn" ]; then
-    python -m venv .venv
-elif [ "$os_type" = "ubuntu" ]; then
     python3 -m venv .venv
+elif [ "$os_type" = "ubuntu" ]; then
+    python -m venv .venv
 fi
-
 . .venv/bin/activate
+
 python -m pip install --no-cache-dir -r cyber-dashboard-flask/requirements.txt
 python -m pip install --no-cache-dir -r cyber-metrics/requirements.txt
 
