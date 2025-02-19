@@ -32,6 +32,7 @@ if [ "$os_type" = "amzn" ]; then
     yum install nginx -y
     yum install unzip -y
     yum remove python3-requests -y
+    yum install openssl -y
 elif [ "$os_type" = "ubuntu" ]; then
     apt-get update
     apt-get upgrade -y
@@ -61,17 +62,16 @@ git clone https://github.com/massyn/cyber-metrics
 
 # == We create a new python virtual environment to keep things clean
 if [ "$os_type" = "amzn" ]; then
+    sudo mount -o remount,size=1G /tmp
     python3 -m venv .venv
 elif [ "$os_type" = "ubuntu" ]; then
     python -m venv .venv
     
 fi
 . .venv/bin/activate
-echo where is python
-type python
 
-python -m pip install --no-cache-dir -r cyber-dashboard-flask/requirements.txt
-python -m pip install --no-cache-dir -r cyber-metrics/requirements.txt
+python -m pip install -r cyber-dashboard-flask/requirements.txt
+python -m pip install -r cyber-metrics/requirements.txt
 
 # == Configure Flask service
 
@@ -85,6 +85,12 @@ elif [ "$os_type" = "ubuntu" ]; then
 fi
 
 # == configure nginx
+mkdir -p /etc/nginx/ssl
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /etc/nginx/ssl/nginx-selfsigned.key \
+    -out /etc/nginx/ssl/nginx-selfsigned.crt \
+    -subj "/C=US/ST=California/L=San Francisco/O=MyCompany/OU=IT/CN=localhost"
+
 if [ -f /etc/nginx/sites-enabled/default ]; then
     cp ${STARTPATH}/nginx.conf /etc/nginx/sites-enabled/default
 else
