@@ -7,7 +7,7 @@ User=cyberdashboard
 Group=cyberdashboard
 WorkingDirectory=/usr/bin/dashboard/cyber-dashboard-flask/server
 Environment="PATH=/usr/bin/dashboard/.venv"
-ExecStart=/usr/bin/dashboard/.venv/bin/gunicorn -w 4 -b 0.0.0.0:8080 app:server
+ExecStart=/usr/bin/dashboard/.venv/bin/gunicorn -w 1 -b 0.0.0.0:8080 app:server
 
 [Install]
 WantedBy=multi-user.target

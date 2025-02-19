@@ -11,8 +11,7 @@ wait_until_time() {
 service nginx start
 
 cd cyber-dashboard-flask/server
-gunicorn -w 4 -b 0.0.0.0:8080 app:server &
-#python app.py &
+gunicorn -w 1 -b 0.0.0.0:8080 app:server &
 
 # == start the data collection
 cd ../../cyber-metrics
