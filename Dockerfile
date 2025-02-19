@@ -4,12 +4,18 @@ WORKDIR /python-docker
 
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install nginx -y
+RUN apt-get install nginx openssl -y
 
 RUN git clone https://github.com/massyn/cyber-dashboard-flask
 RUN git clone https://github.com/massyn/cyber-metrics
 RUN pip install --no-cache-dir -r cyber-dashboard-flask/requirements.txt
 RUN pip install --no-cache-dir -r cyber-metrics/requirements.txt
+
+RUN mkdir -p /etc/nginx/ssl
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /etc/nginx/ssl/nginx-selfsigned.key \
+    -out /etc/nginx/ssl/nginx-selfsigned.crt \
+    -subj "/C=US/ST=California/L=San Francisco/O=MyCompany/OU=IT/CN=localhost"
 
 COPY nginx.conf /etc/nginx/sites-enabled/default
 
