@@ -64,8 +64,11 @@ if [ "$os_type" = "amzn" ]; then
     python3 -m venv .venv
 elif [ "$os_type" = "ubuntu" ]; then
     python -m venv .venv
+    
 fi
 . .venv/bin/activate
+echo where is python
+type python
 
 python -m pip install --no-cache-dir -r cyber-dashboard-flask/requirements.txt
 python -m pip install --no-cache-dir -r cyber-metrics/requirements.txt
@@ -76,7 +79,7 @@ if [ "$os_type" = "amzn" ]; then
     cp ${STARTPATH}/flaskapp.service /etc/systemd/system
     systemctl daemon-reload
     systemctl start flaskapp
-    systemctrl enable flaskapp
+    systemctl enable flaskapp
 elif [ "$os_type" = "ubuntu" ]; then
     echo TODO
 fi
