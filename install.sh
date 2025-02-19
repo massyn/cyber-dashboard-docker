@@ -46,6 +46,8 @@ else
     exit 1
 fi
 
+useradd cyberdashboard
+
 STARTPATH=$(pwd)
 
 # You may want to install the AWS CLI (or any other Cloud provider's CLI at this point)
@@ -74,6 +76,8 @@ python -m pip install -r cyber-dashboard-flask/requirements.txt
 python -m pip install -r cyber-metrics/requirements.txt
 
 # == Configure Flask service
+
+chown -R cyberdashboard:cyberdashboard /usr/bin/dashboard
 
 if [ "$os_type" = "amzn" ]; then
     cp ${STARTPATH}/flaskapp.service /etc/systemd/system
