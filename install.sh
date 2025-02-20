@@ -38,8 +38,8 @@ elif [ "$os_type" = "ubuntu" ]; then
     apt-get upgrade -y
 
     apt-get install unzip -y
-    apt-get install python3 python3-pip -y
-    apt-get install python3.12-venv -y
+    apt-get install python3.11 python3-pip -y
+    apt-get install python3.11-venv -y
     apt-get install nginx -y
 else
     echo "OS not supported for automated updates."
@@ -68,7 +68,6 @@ if [ "$os_type" = "amzn" ]; then
     python3 -m venv .venv
 elif [ "$os_type" = "ubuntu" ]; then
     python -m venv .venv
-    
 fi
 . .venv/bin/activate
 
