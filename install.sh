@@ -76,17 +76,10 @@ python -m pip install -r cyber-metrics/requirements.txt
 
 chown -R cyberdashboard:cyberdashboard /usr/bin/dashboard
 
-if [ "$os_type" = "amzn" ]; then
-    cp ${STARTPATH}/flaskapp.service /etc/systemd/system
-    systemctl daemon-reload
-    systemctl start flaskapp
-    systemctl enable flaskapp
-elif [ "$os_type" = "ubuntu" ]; then
-    cp ${STARTPATH}/flaskapp.service /etc/systemd/system
-    systemctl daemon-reload
-    systemctl start flaskapp
-    systemctl enable flaskapp
-fi
+cp ${STARTPATH}/flaskapp.service /etc/systemd/system
+systemctl daemon-reload
+systemctl start flaskapp
+systemctl enable flaskapp
 
 # == configure nginx
 mkdir -p /etc/nginx/ssl
