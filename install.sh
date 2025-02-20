@@ -32,7 +32,7 @@ if [ "$os_type" = "amzn" ]; then
     yum install nginx -y
     yum install unzip -y
     yum remove python3-requests -y
-    yum install openssl -y
+    #yum install openssl -y
 elif [ "$os_type" = "ubuntu" ]; then
     export DEBIAN_FRONTEND=noninteractive
     apt-get update
@@ -41,6 +41,7 @@ elif [ "$os_type" = "ubuntu" ]; then
     apt-get install unzip -y
     apt-get install python3.11 python3-pip python3-venv -y
     apt-get install nginx -y
+    # apt-get install openssl -y
 else
     echo "OS not supported for automated updates."
     exit 1
@@ -83,16 +84,18 @@ systemctl start flaskapp
 systemctl enable flaskapp
 
 # == configure nginx
-mkdir -p /etc/nginx/ssl
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-    -keyout /etc/nginx/ssl/nginx-selfsigned.key \
-    -out /etc/nginx/ssl/nginx-selfsigned.crt \
-    -subj "/C=US/ST=California/L=San Francisco/O=MyCompany/OU=IT/CN=localhost"
+# mkdir -p /etc/nginx/ssl
+# openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+#     -keyout /etc/nginx/ssl/nginx-selfsigned.key \
+#     -out /etc/nginx/ssl/nginx-selfsigned.crt \
+#     -subj "/C=US/ST=California/L=San Francisco/O=MyCompany/OU=IT/CN=localhost"
 
 if [ -f /etc/nginx/sites-enabled/default ]; then
     cp ${STARTPATH}/nginx.conf /etc/nginx/sites-enabled/default
+    #cp ${STARTPATH}/nginx-ssl.conf /etc/nginx/sites-enabled/default
 else
     cp ${STARTPATH}/nginx.conf /etc/nginx/conf.d/app.conf
+    #cp ${STARTPATH}/nginx-ssl.conf /etc/nginx/conf.d/app.conf
 fi
 
 if [ "$os_type" = "amzn" ]; then
