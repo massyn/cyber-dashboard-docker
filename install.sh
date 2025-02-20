@@ -63,12 +63,8 @@ git clone https://github.com/massyn/cyber-dashboard-flask
 git clone https://github.com/massyn/cyber-metrics
 
 # == We create a new python virtual environment to keep things clean
-if [ "$os_type" = "amzn" ]; then
-    sudo mount -o remount,size=1G /tmp
-    python3 -m venv .venv
-elif [ "$os_type" = "ubuntu" ]; then
-    python -m venv .venv
-fi
+sudo mount -o remount,size=1G /tmp
+python3 -m venv .venv
 . .venv/bin/activate
 
 python -m pip install -r cyber-dashboard-flask/requirements.txt
