@@ -38,8 +38,7 @@ elif [ "$os_type" = "ubuntu" ]; then
     apt-get upgrade -y
 
     apt-get install unzip -y
-    apt-get install python3.11 python3-pip -y
-    apt-get install python3.11-venv -y
+    apt-get install python3.11 python3-pip python3-venv -y
     apt-get install nginx -y
 else
     echo "OS not supported for automated updates."
@@ -63,7 +62,10 @@ git clone https://github.com/massyn/cyber-dashboard-flask
 git clone https://github.com/massyn/cyber-metrics
 
 # == We create a new python virtual environment to keep things clean
-sudo mount -o remount,size=1G /tmp
+if [ "$os_type" = "amzn" ]; then
+    sudo mount -o remount,size=1G /tmp
+fi
+
 python3 -m venv .venv
 . .venv/bin/activate
 
