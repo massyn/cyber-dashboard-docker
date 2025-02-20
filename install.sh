@@ -34,6 +34,7 @@ if [ "$os_type" = "amzn" ]; then
     yum remove python3-requests -y
     yum install openssl -y
 elif [ "$os_type" = "ubuntu" ]; then
+    export DEBIAN_FRONTEND=noninteractive
     apt-get update
     apt-get upgrade -y
 
