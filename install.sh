@@ -82,7 +82,10 @@ if [ "$os_type" = "amzn" ]; then
     systemctl start flaskapp
     systemctl enable flaskapp
 elif [ "$os_type" = "ubuntu" ]; then
-    echo TODO
+    cp ${STARTPATH}/flaskapp.service /etc/systemd/system
+    systemctl daemon-reload
+    systemctl start flaskapp
+    systemctl enable flaskapp
 fi
 
 # == configure nginx
