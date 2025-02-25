@@ -50,9 +50,6 @@ The `install.sh` script can be used to build a server.
 ### Ubuntu
 
 ```bash
-$ cd /tmp
-$ apt-get update
-$ apt-get install git -y
 $ git clone https://github.com/massyn/cyber-dashboard-docker
 $ cd cyber-dashboard-docker
 $ sh install.sh
@@ -61,7 +58,6 @@ $ sh install.sh
 ### Amazon Linux
 
 ```bash
-cd /tmp
 yum install git -y
 git clone https://github.com/massyn/cyber-dashboard-docker
 cd cyber-dashboard-docker
