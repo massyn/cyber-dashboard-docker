@@ -39,12 +39,26 @@ elif [ "$os_type" = "ubuntu" ]; then
     apt-get upgrade -y
 
     apt-get install unzip -y
-    apt-get install python3.11 python3-pip python3-venv -y
+    apt-get install python3-pip python3-venv -y
     apt-get install nginx -y
     # apt-get install openssl -y
 else
     echo "OS not supported for automated updates."
     exit 1
+fi
+
+# Link Python3 to Python
+if command -v python3 >/dev/null 2>&1; then
+    # Check if python does not exist
+    if ! command -v python >/dev/null 2>&1; then
+        # Create the symbolic link
+        ln -s /usr/bin/python3 /usr/bin/python
+        echo "Symbolic link created: /usr/bin/python -> /usr/bin/python3"
+    else
+        echo "python already exists, no action taken."
+    fi
+else
+    echo "python3 is not installed, cannot create link."
 fi
 
 useradd cyberdashboard
